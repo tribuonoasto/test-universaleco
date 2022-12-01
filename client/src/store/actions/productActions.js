@@ -15,7 +15,22 @@ export const fetchCustomers = () => {
         payload: customers,
       });
 
-      return resp;
+      return customers;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const sortCustomers = (sortedCustomers) => {
+  return async (dispatch, getState) => {
+    try {
+      await dispatch({
+        type: ALL_CUSTOMERS_FETCH_SUCCESS,
+        payload: sortedCustomers,
+      });
+
+      return sortedCustomers;
     } catch (error) {
       console.log(error);
     }
