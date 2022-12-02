@@ -7,17 +7,21 @@ import { fetchCustomers, sortCustomers } from "../store/actions/productActions";
 import TableRowCustomers from "../components/TableRowCustomers";
 import { SortAlphaDown, SortAlphaDownAlt } from "react-bootstrap-icons";
 import { sortAsc, sortAscNum, sortDesc, sortDescNum } from "../helpers/sort";
+import ReactLoading from "react-loading";
 
 export default function Home() {
   const { customers } = useSelector((state) => state.customerReducer);
   const [sortedCustomersName, setSortedCustomersName] = useState(true);
   const [sortedCustomersGender, setSortedCustomersGender] = useState(true);
   const [sortedCustomersAddress, setSortedCustomersAddress] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCustomers());
+    dispatch(fetchCustomers()).then(() => {
+      setLoading(false);
+    });
   }, []);
 
   const handleSortName = () => {
@@ -62,6 +66,19 @@ export default function Home() {
     dispatch(sortCustomers(sorted));
   };
 
+  if (loading) {
+    return (
+      <div className="loadingContainer d-flex justify-content-center align-items-center h-100">
+        <ReactLoading
+          type="spinningBubbles"
+          color="#ff860d"
+          height={400}
+          width={200}
+        />
+      </div>
+    );
+  }
+
   return (
     <Row className="mt-2">
       <Col></Col>
@@ -97,6 +114,7 @@ export default function Home() {
                   Address <SortAlphaDownAlt />
                 </th>
               )}
+              <th>Actions</th>
             </tr>
           </thead>
           <TableRowCustomers />

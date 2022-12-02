@@ -1,7 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export default function TableRowCustomers() {
   const { customers } = useSelector((state) => state.customerReducer);
+  const navigate = useNavigate();
+
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`);
+  };
 
   return (
     <tbody>
@@ -23,6 +30,16 @@ export default function TableRowCustomers() {
           ) : (
             <td></td>
           )}
+          <td>
+            <Button
+              onClick={() => {
+                handleEdit(customer._id);
+              }}
+              variant="primary"
+            >
+              Edit
+            </Button>
+          </td>
         </tr>
       ))}
     </tbody>

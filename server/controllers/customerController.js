@@ -32,7 +32,7 @@ class CustomerController {
   static async editCustomers(req, res, next) {
     try {
       const { id } = req.params;
-      const { email, addr } = req.body;
+      const { email, addr, firstName, lastName, gender } = req.body;
 
       if (!email) {
         throw { name: "invalid_validation", msg: "email invalid" };
@@ -42,7 +42,13 @@ class CustomerController {
         throw { name: "invalid_validation", msg: "address invalid" };
       }
 
-      const editCus = await Customer.editCustomer(id, { email, addr });
+      const editCus = await Customer.editCustomer(id, {
+        email,
+        addr,
+        firstName,
+        lastName,
+        gender,
+      });
 
       res.status(200).json({ msg: "Data updated successfully" });
     } catch (error) {
