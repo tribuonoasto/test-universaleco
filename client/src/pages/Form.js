@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchCustomer, updateCustomer } from "../store/actions/productActions";
@@ -7,10 +7,13 @@ import ReactLoading from "react-loading";
 
 export default function Home() {
   const { id } = useParams();
-  const dispatch = useDispatch();
+
   const { customer } = useSelector((state) => state.customerReducer);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(true);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchCustomer(id)).then((resp) => {
@@ -74,7 +77,9 @@ export default function Home() {
           return errors;
         }}
         onSubmit={(values) => {
-          dispatch(updateCustomer(values, id));
+          dispatch(updateCustomer(values, id)).then(() => {
+            navigate("/");
+          });
         }}
       >
         {({ isSubmitting, values }) => (
@@ -126,6 +131,9 @@ export default function Home() {
               )}
             />
             <button type="submit">Submit</button>
+            <Link to={"/"}>
+              <button>Cancel</button>
+            </Link>
           </Form>
         )}
       </Formik>
