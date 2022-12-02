@@ -35,11 +35,23 @@ class CustomerController {
       const { email, addr, firstName, lastName, gender } = req.body;
 
       if (!email) {
-        throw { name: "invalid_validation", msg: "email invalid" };
+        throw { name: "invalid_validation", msg: "Email is required" };
       }
 
       if (!addr) {
-        throw { name: "invalid_validation", msg: "address invalid" };
+        throw { name: "invalid_validation", msg: "Address is Required" };
+      }
+
+      if (!firstName) {
+        throw { name: "invalid_validation", msg: "First Name is Required" };
+      }
+
+      if (!lastName) {
+        throw { name: "invalid_validation", msg: "Last Name is Required" };
+      }
+
+      if (!gender) {
+        throw { name: "invalid_validation", msg: "Gender is Required" };
       }
 
       const editCus = await Customer.editCustomer(id, {
