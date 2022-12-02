@@ -180,11 +180,11 @@ export default function Home() {
                     </div>
                   )}
                 />
-                <button className="me-5" type="submit">
+                <button className="btn btn-success me-5" type="submit">
                   Submit
                 </button>
                 <Link to={"/"}>
-                  <button>Cancel</button>
+                  <button className="btn btn-danger">Cancel</button>
                 </Link>
               </Form>
             )}
