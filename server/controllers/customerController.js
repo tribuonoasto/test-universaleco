@@ -15,6 +15,20 @@ class CustomerController {
     }
   }
 
+  static async showCustomer(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const customer = await Customer.findOne(id);
+
+      if (!customer) throw { name: "customer_not_found" };
+
+      res.status(200).json(customer);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async editCustomers(req, res, next) {
     try {
       const { id } = req.params;

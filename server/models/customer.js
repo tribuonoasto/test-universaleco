@@ -15,6 +15,25 @@ class Customer {
     }
   }
 
+  static async findOne(id) {
+    try {
+      const collection = getDB().collection("customers");
+
+      const options = {};
+
+      const _id = ObjectId(id);
+
+      const customer = await collection.findOne({ _id }, options);
+      return customer;
+    } catch (error) {
+      if (error.name === "BSONTypeError") {
+        throw { name: "customer_not_found" };
+      } else {
+        throw error;
+      }
+    }
+  }
+
   static async editCustomer(id, payload) {
     try {
       const collection = getDB().collection("customers");
