@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 
 const { mongoConnect } = require("./config/mongo");
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 
@@ -17,6 +17,6 @@ app.use(errorHandler);
 
 mongoConnect().then(() => {
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`App running on port ${port}`);
   });
 });
